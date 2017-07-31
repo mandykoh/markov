@@ -1,7 +1,10 @@
 package markov
 
+type SymbolKey string
+
 type Symbol interface {
 	Equals(Symbol) bool
+	Key() SymbolKey
 }
 
 type StringSymbol string
@@ -13,4 +16,8 @@ func (s StringSymbol) Equals(sym Symbol) bool {
 	default:
 		return false
 	}
+}
+
+func (s StringSymbol) Key() SymbolKey {
+	return SymbolKey(s)
 }
