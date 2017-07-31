@@ -28,8 +28,3 @@ func EmptyTable() Table {
 		EntryIndices: make(map[SymbolKey]int),
 	}
 }
-
-type TableEntry struct {
-	Frequency uint64
-	Symbol    Symbol
-}
