@@ -23,8 +23,8 @@ func (t *Table) Add(s Symbol) {
 	t.Entries[index].Frequency++
 }
 
-func NewTable() *Table {
-	return &Table{
+func EmptyTable() Table {
+	return Table{
 		EntryIndices: make(map[SymbolKey]int),
 	}
 }

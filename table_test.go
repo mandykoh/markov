@@ -7,7 +7,7 @@ func TestTable(t *testing.T) {
 	t.Run("Add()", func(t *testing.T) {
 
 		t.Run("creates an entry for new symbols", func(t *testing.T) {
-			table := NewTable()
+			table := EmptyTable()
 			table.Add(StringSymbol("a"))
 
 			if actual := len(table.Entries); actual != 1 {
@@ -28,7 +28,7 @@ func TestTable(t *testing.T) {
 		})
 
 		t.Run("increments frequency for existing symbols", func(t *testing.T) {
-			table := NewTable()
+			table := EmptyTable()
 			table.Add(StringSymbol("a"))
 			table.Add(StringSymbol("a"))
 
