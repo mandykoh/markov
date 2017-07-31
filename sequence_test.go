@@ -37,21 +37,21 @@ func TestSequence(t *testing.T) {
 		})
 	})
 
-	t.Run("Next()", func(t *testing.T) {
+	t.Run("WithNext()", func(t *testing.T) {
 
-		t.Run("returns next sequence using the specified next symbol", func(t *testing.T) {
+		t.Run("returns a sequence using the specified next symbol", func(t *testing.T) {
 			s := EmptySequence(3)
 
-			s = s.Next(StringSymbol("a"))
+			s = s.WithNext(StringSymbol("a"))
 			expectSequenceMatches(t, s, nil, nil, StringSymbol("a"))
 
-			s = s.Next(StringSymbol("b"))
+			s = s.WithNext(StringSymbol("b"))
 			expectSequenceMatches(t, s, nil, StringSymbol("a"), StringSymbol("b"))
 
-			s = s.Next(StringSymbol("c"))
+			s = s.WithNext(StringSymbol("c"))
 			expectSequenceMatches(t, s, StringSymbol("a"), StringSymbol("b"), StringSymbol("c"))
 
-			s = s.Next(StringSymbol("d"))
+			s = s.WithNext(StringSymbol("d"))
 			expectSequenceMatches(t, s, StringSymbol("b"), StringSymbol("c"), StringSymbol("d"))
 		})
 	})
