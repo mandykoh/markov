@@ -85,6 +85,9 @@ func TestTable(t *testing.T) {
 				if actual := table.Entries[i].Frequency; scenario.ExpectedFrequency != actual {
 					t.Errorf("Expected frequency of %d in position %d but got %d", scenario.ExpectedFrequency, i, actual)
 				}
+				if actual := table.EntryIndices[scenario.ExpectedSymbol.Key()]; i != actual {
+					t.Errorf("Expected symbol '%v' to map to position %d but got %d", scenario.ExpectedSymbol, i, actual)
+				}
 			}
 		})
 	})

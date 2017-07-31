@@ -31,14 +31,15 @@ func (t *Table) sortEntry(index int) {
 	j := index
 
 	for i := index - 1; i >= 0 && t.Entries[j].Frequency > t.Entries[i].Frequency; i-- {
-		t.EntryIndices[t.Entries[i].Symbol.Key()] = j
-		t.EntryIndices[t.Entries[j].Symbol.Key()] = i
-
 		tmp := t.Entries[i]
 		t.Entries[i] = t.Entries[j]
 		t.Entries[j] = tmp
 
 		j = i
+	}
+
+	for i := j; i <= index; i++ {
+		t.EntryIndices[t.Entries[i].Symbol.Key()] = i
 	}
 }
 
