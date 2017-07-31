@@ -1,8 +1,9 @@
 package markov
 
 type Table struct {
-	Entries      []TableEntry
-	EntryIndices map[SymbolKey]int
+	Entries        []TableEntry
+	EntryIndices   map[SymbolKey]int
+	TotalFrequency uint64
 }
 
 func (t *Table) Add(s Symbol) {
@@ -10,17 +11,18 @@ func (t *Table) Add(s Symbol) {
 
 	index, exists := t.EntryIndices[key]
 	if !exists {
-		t.EntryIndices[key] = len(t.Entries)
+		index = len(t.Entries)
+		t.EntryIndices[key] = index
 
 		entry := TableEntry{
-			Frequency: 1,
+			Frequency: 0,
 			Symbol:    s,
 		}
 		t.Entries = append(t.Entries, entry)
-		return
 	}
 
 	t.Entries[index].Frequency++
+	t.TotalFrequency++
 }
 
 func EmptyTable() Table {

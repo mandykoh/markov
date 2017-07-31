@@ -16,6 +16,9 @@ func TestTable(t *testing.T) {
 			if expected, actual := uint64(1), table.Entries[0].Frequency; expected != actual {
 				t.Fatalf("Expected frequency of %d but got %d", expected, actual)
 			}
+			if expected, actual := uint64(1), table.TotalFrequency; expected != actual {
+				t.Fatalf("Expected total frequency of %d but got %d", expected, actual)
+			}
 
 			table.Add(StringSymbol("b"))
 
@@ -24,6 +27,9 @@ func TestTable(t *testing.T) {
 			}
 			if expected, actual := uint64(1), table.Entries[1].Frequency; expected != actual {
 				t.Fatalf("Expected frequency of %d but got %d", expected, actual)
+			}
+			if expected, actual := uint64(2), table.TotalFrequency; expected != actual {
+				t.Fatalf("Expected total frequency of %d but got %d", expected, actual)
 			}
 		})
 
@@ -37,6 +43,9 @@ func TestTable(t *testing.T) {
 			}
 			if expected, actual := uint64(2), table.Entries[0].Frequency; expected != actual {
 				t.Fatalf("Expected frequency of %d but got %d", expected, actual)
+			}
+			if expected, actual := uint64(2), table.TotalFrequency; expected != actual {
+				t.Fatalf("Expected total frequency of %d but got %d", expected, actual)
 			}
 		})
 	})
