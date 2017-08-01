@@ -1,9 +1,9 @@
 package markov
 
 type Table struct {
-	Entries        []TableEntry
-	EntryIndices   map[SymbolKey]int
-	TotalFrequency uint64
+	TotalSymbols uint64
+	Entries      []TableEntry
+	EntryIndices map[SymbolKey]int
 }
 
 func (t *Table) Add(s Symbol) {
@@ -22,9 +22,24 @@ func (t *Table) Add(s Symbol) {
 	}
 
 	t.Entries[index].Frequency++
-	t.TotalFrequency++
+	t.TotalSymbols++
 
 	t.sortEntry(index)
+}
+
+func (t Table) Sample(symbolIndex uint64) Symbol {
+	remaining := symbolIndex
+
+	for index := 0; index < len(t.Entries); index++ {
+		entry := &t.Entries[index]
+
+		if remaining < entry.Frequency {
+			return entry.Symbol
+		}
+		remaining -= entry.Frequency
+	}
+
+	return nil
 }
 
 func (t *Table) sortEntry(index int) {
