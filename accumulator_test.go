@@ -11,7 +11,7 @@ func TestAccumulator(t *testing.T) {
 			m := NewModel(ts)
 			acc := NewAccumulator(m, 2)
 
-			err := acc.Add(StringSymbol("a"))
+			err := acc.Add("a")
 			if err != nil {
 				t.Fatalf("Error accumulating: %v", err)
 			}
@@ -23,7 +23,7 @@ func TestAccumulator(t *testing.T) {
 				t.Errorf("Expected sequence to be '%s' but was '%s'", expected, actual)
 			}
 
-			err = acc.Add(StringSymbol("b"))
+			err = acc.Add("b")
 			if err != nil {
 				t.Fatalf("Error accumulating: %v", err)
 			}
@@ -35,7 +35,7 @@ func TestAccumulator(t *testing.T) {
 				t.Errorf("Expected sequence to be '%s' but was '%s'", expected, actual)
 			}
 
-			err = acc.Add(StringSymbol("c"))
+			err = acc.Add("c")
 			if err != nil {
 				t.Fatalf("Error accumulating: %v", err)
 			}

@@ -10,10 +10,10 @@ type Generator struct {
 	SampleSource    SampleSource
 }
 
-func (g *Generator) Get() (s Symbol, err error) {
-	s, err = g.Model.Sample(g.CurrentSequence, g.SampleSource.Float64())
+func (g *Generator) Get() (symbol string, err error) {
+	symbol, err = g.Model.Sample(g.CurrentSequence, g.SampleSource.Float64())
 	if err == nil {
-		g.CurrentSequence = g.CurrentSequence.WithNext(s)
+		g.CurrentSequence = g.CurrentSequence.WithNext(symbol)
 	}
 	return
 }

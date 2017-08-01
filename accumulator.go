@@ -5,10 +5,10 @@ type Accumulator struct {
 	CurrentSequence Sequence
 }
 
-func (acc *Accumulator) Add(s Symbol) (err error) {
-	err = acc.Model.Add(acc.CurrentSequence, s)
+func (acc *Accumulator) Add(symbol string) (err error) {
+	err = acc.Model.Add(acc.CurrentSequence, symbol)
 	if err == nil {
-		acc.CurrentSequence = acc.CurrentSequence.WithNext(s)
+		acc.CurrentSequence = acc.CurrentSequence.WithNext(symbol)
 	}
 	return
 }

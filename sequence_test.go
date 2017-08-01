@@ -4,17 +4,17 @@ import "testing"
 
 func TestSequence(t *testing.T) {
 
-	expectSequenceMatches := func(t *testing.T, s Sequence, symbols ...Symbol) {
+	expectSequenceMatches := func(t *testing.T, s Sequence, symbols ...string) {
 		if sequenceOrder, symbolCount := s.Order(), uint(len(symbols)); sequenceOrder != symbolCount {
 			t.Fatalf("Expected sequence of order %d to match %d symbols", sequenceOrder, symbolCount)
 		}
 
 		for i := 0; i < len(s.Symbols); i++ {
-			if symbols[i] == nil {
-				if s.Symbols[i] != nil {
-					t.Errorf("Expected symbol %d to be nil but was '%v'", i, s.Symbols[i])
+			if symbols[i] == "" {
+				if s.Symbols[i] != "" {
+					t.Errorf("Expected symbol %d to be empty but was '%v'", i, s.Symbols[i])
 				}
-			} else if !symbols[i].Equals(s.Symbols[i]) {
+			} else if symbols[i] != s.Symbols[i] {
 				t.Errorf("Expected symbol %d to be '%v' but was '%v'", i, symbols[i], s.Symbols[i])
 			}
 		}
@@ -30,8 +30,8 @@ func TestSequence(t *testing.T) {
 			}
 
 			for i := 0; i < len(s.Symbols); i++ {
-				if s.Symbols[i] != nil {
-					t.Errorf("Expected symbol %d in sequence to be nil but got '%v'", i, s.Symbols[i])
+				if s.Symbols[i] != "" {
+					t.Errorf("Expected symbol %d in sequence to be empty but got '%v'", i, s.Symbols[i])
 				}
 			}
 		})
@@ -41,9 +41,9 @@ func TestSequence(t *testing.T) {
 
 		t.Run("returns a sequence key derived from the symbols", func(t *testing.T) {
 			s := EmptySequence(3)
-			s = s.WithNext(StringSymbol("a"))
-			s = s.WithNext(StringSymbol("b"))
-			s = s.WithNext(StringSymbol("c"))
+			s = s.WithNext("a")
+			s = s.WithNext("b")
+			s = s.WithNext("c")
 
 			if expected, actual := SequenceKey("a|b|c"), s.Key(); expected != actual {
 				t.Errorf("Expected sequence key '%s' but got '%s'", expected, actual)
@@ -52,8 +52,8 @@ func TestSequence(t *testing.T) {
 
 		t.Run("correclty returns a sequence key shorter than the sequence", func(t *testing.T) {
 			s := EmptySequence(3)
-			s = s.WithNext(StringSymbol("a"))
-			s = s.WithNext(StringSymbol("b"))
+			s = s.WithNext("a")
+			s = s.WithNext("b")
 
 			if expected, actual := SequenceKey("a|b"), s.Key(); expected != actual {
 				t.Errorf("Expected sequence key '%s' but got '%s'", expected, actual)
@@ -66,17 +66,17 @@ func TestSequence(t *testing.T) {
 		t.Run("returns a sequence using the specified next symbol", func(t *testing.T) {
 			s := EmptySequence(3)
 
-			s = s.WithNext(StringSymbol("a"))
-			expectSequenceMatches(t, s, nil, nil, StringSymbol("a"))
+			s = s.WithNext("a")
+			expectSequenceMatches(t, s, "", "", "a")
 
-			s = s.WithNext(StringSymbol("b"))
-			expectSequenceMatches(t, s, nil, StringSymbol("a"), StringSymbol("b"))
+			s = s.WithNext("b")
+			expectSequenceMatches(t, s, "", "a", "b")
 
-			s = s.WithNext(StringSymbol("c"))
-			expectSequenceMatches(t, s, StringSymbol("a"), StringSymbol("b"), StringSymbol("c"))
+			s = s.WithNext("c")
+			expectSequenceMatches(t, s, "a", "b", "c")
 
-			s = s.WithNext(StringSymbol("d"))
-			expectSequenceMatches(t, s, StringSymbol("b"), StringSymbol("c"), StringSymbol("d"))
+			s = s.WithNext("d")
+			expectSequenceMatches(t, s, "b", "c", "d")
 		})
 	})
 }

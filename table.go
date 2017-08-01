@@ -3,20 +3,18 @@ package markov
 type Table struct {
 	TotalSymbols uint64
 	Entries      []TableEntry
-	EntryIndices map[SymbolKey]int
+	EntryIndices map[string]int
 }
 
-func (t *Table) Add(s Symbol) {
-	key := s.Key()
-
-	index, exists := t.EntryIndices[key]
+func (t *Table) Add(symbol string) {
+	index, exists := t.EntryIndices[symbol]
 	if !exists {
 		index = len(t.Entries)
-		t.EntryIndices[key] = index
+		t.EntryIndices[symbol] = index
 
 		entry := TableEntry{
 			Frequency: 0,
-			Symbol:    s,
+			Symbol:    symbol,
 		}
 		t.Entries = append(t.Entries, entry)
 	}
@@ -27,7 +25,7 @@ func (t *Table) Add(s Symbol) {
 	t.sortEntry(index)
 }
 
-func (t Table) Sample(symbolIndex uint64) Symbol {
+func (t Table) Sample(symbolIndex uint64) (symbol string) {
 	remaining := symbolIndex
 
 	for index := 0; index < len(t.Entries); index++ {
@@ -39,7 +37,7 @@ func (t Table) Sample(symbolIndex uint64) Symbol {
 		remaining -= entry.Frequency
 	}
 
-	return nil
+	return ""
 }
 
 func (t *Table) sortEntry(index int) {
@@ -54,12 +52,12 @@ func (t *Table) sortEntry(index int) {
 	}
 
 	for i := j; i <= index; i++ {
-		t.EntryIndices[t.Entries[i].Symbol.Key()] = i
+		t.EntryIndices[t.Entries[i].Symbol] = i
 	}
 }
 
 func EmptyTable() Table {
 	return Table{
-		EntryIndices: make(map[SymbolKey]int),
+		EntryIndices: make(map[string]int),
 	}
 }

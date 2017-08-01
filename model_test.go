@@ -9,11 +9,11 @@ func TestModel(t *testing.T) {
 		t.Run("creates a mapping for a new sequence", func(t *testing.T) {
 			ts := NewInMemoryTableStore()
 			m := NewModel(ts)
-			s1 := EmptySequence(2).WithNext(StringSymbol("a"))
-			s2 := EmptySequence(2).WithNext(StringSymbol("b"))
+			s1 := EmptySequence(2).WithNext("a")
+			s2 := EmptySequence(2).WithNext("b")
 
-			m.Add(s1, StringSymbol("b"))
-			m.Add(s2, StringSymbol("b"))
+			m.Add(s1, "b")
+			m.Add(s2, "b")
 
 			if expected, actual := 2, len(ts.TablesBySequence); expected != actual {
 				t.Fatalf("Expected %d tables but found %d", expected, actual)
@@ -29,10 +29,10 @@ func TestModel(t *testing.T) {
 		t.Run("adds to a mapping for an existing sequence", func(t *testing.T) {
 			ts := NewInMemoryTableStore()
 			m := NewModel(ts)
-			s := EmptySequence(2).WithNext(StringSymbol("a"))
+			s := EmptySequence(2).WithNext("a")
 
-			m.Add(s, StringSymbol("b"))
-			m.Add(s, StringSymbol("c"))
+			m.Add(s, "b")
+			m.Add(s, "c")
 
 			if expected, actual := 1, len(ts.TablesBySequence); expected != actual {
 				t.Fatalf("Expected one table but found %d", actual)
@@ -48,16 +48,16 @@ func TestModel(t *testing.T) {
 		t.Run("samples the table mapped to the sequence", func(t *testing.T) {
 			ts := NewInMemoryTableStore()
 			m := NewModel(ts)
-			s := EmptySequence(2).WithNext(StringSymbol("a"))
+			s := EmptySequence(2).WithNext("a")
 
-			m.Add(s, StringSymbol("b"))
+			m.Add(s, "b")
 
 			nextSymbol, err := m.Sample(s, 0.0)
 
 			if err != nil {
 				t.Fatalf("Error sampling from model: %v", err)
 			}
-			if expected, actual := StringSymbol("b"), nextSymbol; expected != actual {
+			if expected, actual := "b", nextSymbol; expected != actual {
 				t.Errorf("Expected symbol '%v' but got '%v'", expected, actual)
 			}
 		})

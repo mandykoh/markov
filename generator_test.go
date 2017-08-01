@@ -14,13 +14,13 @@ func TestGenerator(t *testing.T) {
 			m := NewModel(ts)
 
 			seq := EmptySequence(2)
-			m.Add(seq, StringSymbol("a"))
+			m.Add(seq, "a")
 
-			seq = seq.WithNext(StringSymbol("a"))
-			m.Add(seq, StringSymbol("b"))
+			seq = seq.WithNext("a")
+			m.Add(seq, "b")
 
-			seq = seq.WithNext(StringSymbol("b"))
-			m.Add(seq, StringSymbol("c"))
+			seq = seq.WithNext("b")
+			m.Add(seq, "c")
 
 			gen := NewGenerator(m, 2, rand.New(rand.NewSource(12345)))
 
@@ -29,7 +29,7 @@ func TestGenerator(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Error generating: %v", err)
 			}
-			if expected, actual := StringSymbol("a"), s; expected != actual {
+			if expected, actual := "a", s; expected != actual {
 				t.Errorf("Expected symbol '%s' but was '%s'", expected, actual)
 			}
 
@@ -38,7 +38,7 @@ func TestGenerator(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Error generating: %v", err)
 			}
-			if expected, actual := StringSymbol("b"), s; expected != actual {
+			if expected, actual := "b", s; expected != actual {
 				t.Errorf("Expected symbol '%s' but was '%s'", expected, actual)
 			}
 
@@ -47,7 +47,7 @@ func TestGenerator(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Error generating: %v", err)
 			}
-			if expected, actual := StringSymbol("c"), s; expected != actual {
+			if expected, actual := "c", s; expected != actual {
 				t.Errorf("Expected symbol '%s' but was '%s'", expected, actual)
 			}
 		})

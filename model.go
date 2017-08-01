@@ -4,7 +4,7 @@ type Model struct {
 	Tables TableStore
 }
 
-func (m *Model) Add(seq Sequence, next Symbol) error {
+func (m *Model) Add(seq Sequence, nextSymbol string) error {
 	seqKey := seq.Key()
 
 	var t Table
@@ -16,11 +16,11 @@ func (m *Model) Add(seq Sequence, next Symbol) error {
 		return err
 	}
 
-	t.Add(next)
+	t.Add(nextSymbol)
 	return m.Tables.Put(seqKey, &t)
 }
 
-func (m Model) Sample(seq Sequence, sampleValue float64) (next Symbol, err error) {
+func (m Model) Sample(seq Sequence, sampleValue float64) (nextSymbol string, err error) {
 	seqKey := seq.Key()
 
 	var t Table
@@ -30,7 +30,7 @@ func (m Model) Sample(seq Sequence, sampleValue float64) (next Symbol, err error
 	}
 
 	symbolIndex := uint64(sampleValue * float64(t.TotalSymbols))
-	next = t.Sample(symbolIndex)
+	nextSymbol = t.Sample(symbolIndex)
 	return
 }
 

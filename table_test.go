@@ -10,9 +10,9 @@ func TestTable(t *testing.T) {
 
 		t.Run("creates an entry for new symbols", func(t *testing.T) {
 			table := EmptyTable()
-			table.Add(StringSymbol("a"))
+			table.Add("a")
 
-			indexA := table.EntryIndices[SymbolKey("a")]
+			indexA := table.EntryIndices["a"]
 
 			if actual := len(table.Entries); actual != 1 {
 				t.Fatalf("Expected 1 entry but got %d", actual)
@@ -24,8 +24,8 @@ func TestTable(t *testing.T) {
 				t.Fatalf("Expected total frequency of %d but got %d", expected, actual)
 			}
 
-			table.Add(StringSymbol("b"))
-			indexB := table.EntryIndices[SymbolKey("b")]
+			table.Add("b")
+			indexB := table.EntryIndices["b"]
 
 			if actual := len(table.Entries); actual != 2 {
 				t.Fatalf("Expected 2 entries but got %d", actual)
@@ -40,8 +40,8 @@ func TestTable(t *testing.T) {
 
 		t.Run("increments frequency for existing symbols", func(t *testing.T) {
 			table := EmptyTable()
-			table.Add(StringSymbol("a"))
-			table.Add(StringSymbol("a"))
+			table.Add("a")
+			table.Add("a")
 
 			if actual := len(table.Entries); actual != 1 {
 				t.Fatalf("Expected 1 entries but got %d", actual)
@@ -56,22 +56,22 @@ func TestTable(t *testing.T) {
 
 		t.Run("keeps entries sorted from most to least frequent", func(t *testing.T) {
 			table := EmptyTable()
-			table.Add(StringSymbol("a"))
-			table.Add(StringSymbol("b"))
-			table.Add(StringSymbol("c"))
-			table.Add(StringSymbol("b"))
-			table.Add(StringSymbol("d"))
-			table.Add(StringSymbol("d"))
-			table.Add(StringSymbol("d"))
+			table.Add("a")
+			table.Add("b")
+			table.Add("c")
+			table.Add("b")
+			table.Add("d")
+			table.Add("d")
+			table.Add("d")
 
 			scenarios := []struct {
-				ExpectedSymbol    Symbol
+				ExpectedSymbol    string
 				ExpectedFrequency uint64
 			}{
-				{StringSymbol("d"), 3},
-				{StringSymbol("b"), 2},
-				{StringSymbol("a"), 1},
-				{StringSymbol("c"), 1},
+				{"d", 3},
+				{"b", 2},
+				{"a", 1},
+				{"c", 1},
 			}
 
 			if expected, actual := len(scenarios), len(table.Entries); expected != actual {
@@ -85,7 +85,7 @@ func TestTable(t *testing.T) {
 				if actual := table.Entries[i].Frequency; scenario.ExpectedFrequency != actual {
 					t.Errorf("Expected frequency of %d in position %d but got %d", scenario.ExpectedFrequency, i, actual)
 				}
-				if actual := table.EntryIndices[scenario.ExpectedSymbol.Key()]; i != actual {
+				if actual := table.EntryIndices[scenario.ExpectedSymbol]; i != actual {
 					t.Errorf("Expected symbol '%v' to map to position %d but got %d", scenario.ExpectedSymbol, i, actual)
 				}
 			}
@@ -94,24 +94,24 @@ func TestTable(t *testing.T) {
 
 	t.Run("Sample()", func(t *testing.T) {
 		table := EmptyTable()
-		table.Add(StringSymbol("b"))
-		table.Add(StringSymbol("a"))
-		table.Add(StringSymbol("a"))
-		table.Add(StringSymbol("a"))
-		table.Add(StringSymbol("c"))
-		table.Add(StringSymbol("c"))
+		table.Add("b")
+		table.Add("a")
+		table.Add("a")
+		table.Add("a")
+		table.Add("c")
+		table.Add("c")
 
 		t.Run("returns the symbol corresponding to the symbol index", func(t *testing.T) {
 			scenarios := []struct {
 				SymbolIndex    uint64
-				ExpectedSymbol Symbol
+				ExpectedSymbol string
 			}{
-				{0, StringSymbol("a")},
-				{1, StringSymbol("a")},
-				{2, StringSymbol("a")},
-				{3, StringSymbol("c")},
-				{4, StringSymbol("c")},
-				{5, StringSymbol("b")},
+				{0, "a"},
+				{1, "a"},
+				{2, "a"},
+				{3, "c"},
+				{4, "c"},
+				{5, "b"},
 			}
 
 			for _, scenario := range scenarios {
@@ -122,13 +122,13 @@ func TestTable(t *testing.T) {
 		})
 
 		t.Run("returns nil when the symbol index is out of range", func(t *testing.T) {
-			if expected, actual := Symbol(nil), table.Sample(table.TotalSymbols); expected != actual {
+			if expected, actual := "", table.Sample(table.TotalSymbols); expected != actual {
 				t.Errorf("Expected nil for symbol index %d but got '%v'", table.TotalSymbols, actual)
 			}
 		})
 
 		t.Run("returns nil when the table is empty", func(t *testing.T) {
-			if expected, actual := Symbol(nil), EmptyTable().Sample(0); expected != actual {
+			if expected, actual := "", EmptyTable().Sample(0); expected != actual {
 				t.Errorf("Expected nil for symbol index %d but got '%v'", 0, actual)
 			}
 		})
