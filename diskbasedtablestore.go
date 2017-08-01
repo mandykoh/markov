@@ -13,7 +13,11 @@ func (ts *DiskBasedTableStore) Close() error {
 }
 
 func (ts *DiskBasedTableStore) Get(key SequenceKey, dest *Table) error {
-	return ts.KevaStore.Get(string(key), dest)
+	err := ts.KevaStore.Get(string(key), dest)
+	if err == keva.ErrValueNotFound {
+		return ErrTableNotFound
+	}
+	return err
 }
 
 func (ts *DiskBasedTableStore) Put(key SequenceKey, table *Table) error {
