@@ -1,7 +1,33 @@
 package markov
 
+import (
+	"bytes"
+)
+
+type SequenceKey string
+
 type Sequence struct {
 	Symbols []Symbol
+}
+
+func (s Sequence) Key() SequenceKey {
+	var keyBytes bytes.Buffer
+
+	for _, symbol := range s.Symbols {
+		var symbolKey string
+		if symbol != nil {
+			symbolKey = string(symbol.Key())
+		} else {
+			symbolKey = ""
+		}
+
+		if keyBytes.Len() > 0 {
+			keyBytes.WriteString("|")
+		}
+		keyBytes.WriteString(string(symbolKey))
+	}
+
+	return SequenceKey(keyBytes.String())
 }
 
 func (s Sequence) Order() uint {

@@ -37,6 +37,30 @@ func TestSequence(t *testing.T) {
 		})
 	})
 
+	t.Run("Key()", func(t *testing.T) {
+
+		t.Run("returns a sequence key derived from the symbols", func(t *testing.T) {
+			s := EmptySequence(3)
+			s = s.WithNext(StringSymbol("a"))
+			s = s.WithNext(StringSymbol("b"))
+			s = s.WithNext(StringSymbol("c"))
+
+			if expected, actual := SequenceKey("a|b|c"), s.Key(); expected != actual {
+				t.Errorf("Expected sequence key '%s' but got '%s'", expected, actual)
+			}
+		})
+
+		t.Run("correclty returns a sequence key shorter than the sequence", func(t *testing.T) {
+			s := EmptySequence(3)
+			s = s.WithNext(StringSymbol("a"))
+			s = s.WithNext(StringSymbol("b"))
+
+			if expected, actual := SequenceKey("a|b"), s.Key(); expected != actual {
+				t.Errorf("Expected sequence key '%s' but got '%s'", expected, actual)
+			}
+		})
+	})
+
 	t.Run("WithNext()", func(t *testing.T) {
 
 		t.Run("returns a sequence using the specified next symbol", func(t *testing.T) {
