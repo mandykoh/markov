@@ -62,17 +62,18 @@ func TestModel(t *testing.T) {
 			}
 		})
 
-		t.Run("returns an error if no table is mapped to the sequence", func(t *testing.T) {
+		t.Run("returns an empty symbol if no table is mapped to the sequence", func(t *testing.T) {
 			ts := NewInMemoryTableStore()
 			m := NewModel(ts)
 			s := EmptySequence(2)
 
-			_, err := m.Sample(s, 0)
+			sym, err := m.Sample(s, 0)
 
 			if err != nil {
-				if err != ErrTableNotFound {
-					t.Fatalf("Expected ErrTableNotFound but got %v", err)
-				}
+				t.Fatalf("Error sampling from model: %v", err)
+			}
+			if expected, actual := "", sym; expected != actual {
+				t.Errorf("Expected symbol '%v' but got '%v'", expected, actual)
 			}
 		})
 	})

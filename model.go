@@ -25,7 +25,12 @@ func (m Model) Sample(seq Sequence, sampleValue float64) (nextSymbol string, err
 
 	var t Table
 	err = m.Tables.Get(seqKey, &t)
-	if err != nil {
+	if err == ErrTableNotFound {
+		nextSymbol = ""
+		err = nil
+		return
+
+	} else if err != nil {
 		return
 	}
 
