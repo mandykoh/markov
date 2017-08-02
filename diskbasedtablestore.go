@@ -24,10 +24,13 @@ func (ts *DiskBasedTableStore) Put(key SequenceKey, table *Table) error {
 	return ts.KevaStore.Put(string(key), table)
 }
 
-func NewDiskBasedTableStore(rootPath string) *DiskBasedTableStore {
-	kevaStore := keva.NewStore(rootPath)
+func NewDiskBasedTableStore(rootPath string) (*DiskBasedTableStore, error) {
+	kevaStore, err := keva.NewStore(rootPath)
+	if err != nil {
+		return nil, err
+	}
 
 	return &DiskBasedTableStore{
 		KevaStore: kevaStore,
-	}
+	}, nil
 }

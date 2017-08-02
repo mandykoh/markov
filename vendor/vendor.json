@@ -3,16 +3,20 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "KwU0Zp+hvr9Z4Ro+SYo7dzP1KdI=",
+			"checksumSHA1": "1TWxTmVoDkK12dJzcW2g8UpsOLg=",
 			"path": "github.com/mandykoh/keva",
-			"revision": "d7685a07e005b5727abe28d2690d7f143df1dc06",
-			"revisionTime": "2017-06-24T02:05:24Z"
+			"revision": "80ceb51dc43a7f09ddc2112e89394e326cec452b",
+			"revisionTime": "2017-08-02T08:01:06Z"
 		},
 		{
 			"checksumSHA1": "fk05LCN5pjUKlw10ErXFIYoFxZk=",
 			"path": "github.com/mandykoh/symlock",
 			"revision": "0362cd091b6b627bf9552d87ba15956d5e8bde32",
 			"revisionTime": "2017-06-17T12:17:10Z"
+		},
+		{
+			"path": "github.com/mandykov/keva",
+			"revision": ""
 		}
 	],
 	"rootPath": "github.com/mandykoh/markov"
