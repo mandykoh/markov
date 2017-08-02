@@ -2,7 +2,11 @@ package markov
 
 import (
 	"bytes"
+	"strings"
 )
+
+const sequenceKeyEscape = '\\'
+const sequenceKeySeparator = '|'
 
 type SequenceKey string
 
@@ -15,8 +19,11 @@ func (s Sequence) Key() SequenceKey {
 
 	for _, symbol := range s.Symbols {
 		if keyBytes.Len() > 0 {
-			keyBytes.WriteString("|")
+			keyBytes.WriteRune(sequenceKeySeparator)
 		}
+
+		symbol = strings.Replace(symbol, string(sequenceKeyEscape), `\\`, -1)
+		symbol = strings.Replace(symbol, string(sequenceKeySeparator), `\|`, -1)
 		keyBytes.WriteString(symbol)
 	}
 
@@ -37,4 +44,8 @@ func (s Sequence) WithNext(nextSym string) Sequence {
 
 func EmptySequence(order uint) Sequence {
 	return Sequence{Symbols: make([]string, order)}
+}
+
+func SequenceWith(symbols ...string) Sequence {
+	return Sequence{Symbols: symbols}
 }

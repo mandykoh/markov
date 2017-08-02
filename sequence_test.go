@@ -40,22 +40,33 @@ func TestSequence(t *testing.T) {
 	t.Run("Key()", func(t *testing.T) {
 
 		t.Run("returns a sequence key derived from the symbols", func(t *testing.T) {
-			s := EmptySequence(3)
-			s = s.WithNext("a")
-			s = s.WithNext("b")
-			s = s.WithNext("c")
+			s := SequenceWith("a", "b", "c")
 
 			if expected, actual := SequenceKey("a|b|c"), s.Key(); expected != actual {
 				t.Errorf("Expected sequence key '%s' but got '%s'", expected, actual)
 			}
 		})
 
-		t.Run("correclty returns a sequence key shorter than the sequence", func(t *testing.T) {
-			s := EmptySequence(3)
-			s = s.WithNext("a")
-			s = s.WithNext("b")
+		t.Run("correctly returns keys that have leading empty symbols", func(t *testing.T) {
+			s := SequenceWith("", "a", "b")
 
 			if expected, actual := SequenceKey("a|b"), s.Key(); expected != actual {
+				t.Errorf("Expected sequence key '%s' but got '%s'", expected, actual)
+			}
+		})
+
+		t.Run("correctly treats non-leading empty symbols as significant", func(t *testing.T) {
+			s := SequenceWith("a", "", "b")
+
+			if expected, actual := SequenceKey("a||b"), s.Key(); expected != actual {
+				t.Errorf("Expected sequence key '%s' but got '%s'", expected, actual)
+			}
+		})
+
+		t.Run("correctly escapes the separator", func(t *testing.T) {
+			s := SequenceWith(`a|b\`, "c")
+
+			if expected, actual := SequenceKey(`a\|b\\|c`), s.Key(); expected != actual {
 				t.Errorf("Expected sequence key '%s' but got '%s'", expected, actual)
 			}
 		})
