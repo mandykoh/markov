@@ -4,15 +4,15 @@ import (
 	"github.com/mandykoh/keva"
 )
 
-type DiskBasedTableStore struct {
+type KevaTableStore struct {
 	KevaStore *keva.Store
 }
 
-func (ts *DiskBasedTableStore) Close() error {
+func (ts *KevaTableStore) Close() error {
 	return ts.KevaStore.Close()
 }
 
-func (ts *DiskBasedTableStore) Get(key SequenceKey, dest *Table) error {
+func (ts *KevaTableStore) Get(key SequenceKey, dest *Table) error {
 	err := ts.KevaStore.Get(string(key), dest)
 	if err == keva.ErrValueNotFound {
 		return ErrTableNotFound
@@ -20,17 +20,17 @@ func (ts *DiskBasedTableStore) Get(key SequenceKey, dest *Table) error {
 	return err
 }
 
-func (ts *DiskBasedTableStore) Put(key SequenceKey, table *Table) error {
+func (ts *KevaTableStore) Put(key SequenceKey, table *Table) error {
 	return ts.KevaStore.Put(string(key), table)
 }
 
-func NewDiskBasedTableStore(rootPath string) (*DiskBasedTableStore, error) {
+func NewKevaTableStore(rootPath string) (*KevaTableStore, error) {
 	kevaStore, err := keva.NewStore(rootPath)
 	if err != nil {
 		return nil, err
 	}
 
-	return &DiskBasedTableStore{
+	return &KevaTableStore{
 		KevaStore: kevaStore,
 	}, nil
 }
