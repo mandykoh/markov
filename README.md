@@ -8,14 +8,18 @@ Markov model library for Go
 
 ## Examples
 
-Create a store for holding your Markov table data. Two types are provided: an in-memory store, and a persistent disk-based store:
+Create a store for holding your Markov table data. Three types are provided:
 
 ```go
 store := markov.NewInMemoryTableStore()
 ```
 
 ```go
-store, err := markov.NewDiskBasedTableStore("path/to/store")
+store, err := markov.NewKevaTableStore("path/to/store")
+```
+
+```go
+store, err := markov.NewBoltTableStore("path/to/store")
 ```
 
 Stores need to be closed after use:
