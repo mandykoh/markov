@@ -1,0 +1,8 @@
+github.com/coreos/bbolt v1.3.0 h1:HIgH5xUWXT914HCI671AxuTTqjj64UOFr7pHn48LUTI=
+github.com/coreos/bbolt v1.3.0/go.mod h1:iRUV2dpdMOn7Bo10OQBFzIJO9kkE559Wcmn+qkEiiKk=
+github.com/mandykoh/keva v0.0.0-20180215110710-5768da4b0e4e h1:hd6Y4gIFLy7WV62yUIBLa41OTq08aO5D6aBhfsi91wY=
+github.com/mandykoh/keva v0.0.0-20180215110710-5768da4b0e4e/go.mod h1:nS7RstML39I9+zH1wuKs7REcnXNxXtH8+sFjUx/tEqw=
+github.com/mandykoh/symlock v0.0.0-20180215110440-71d80ff601aa h1:WJdM+t27FGmRFtLr8lm1an6O4JUoHlwMcngtwafWoSo=
+github.com/mandykoh/symlock v0.0.0-20180215110440-71d80ff601aa/go.mod h1:bOsfIiA5Wvpu3IoRzmyxzX77XyXEuCEeNBFnXZMcgXg=
+golang.org/x/sys v0.0.0-20180202135801-37707fdb30a5 h1:MF92a0wJ3gzSUVBpjcwdrDr5+klMFRNEEu6Mev4n00I=
+golang.org/x/sys v0.0.0-20180202135801-37707fdb30a5/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
